@@ -20,18 +20,23 @@ int enemy_turn();
 int main()
 {
     int i,max,p,end;
+    bool player1_first=true;
     srand(time(NULL));
     while(cnt<N*M)
     {
+        cnt++;
         //my turn
-        cnt++;
-        put_stone(my_turn(),1);
-        print_map();
-
+        if(((int)player1_first+cnt)%2==0)
+        {
+            put_stone(my_turn(),1);
+            print_map();
+        }
         //enemy's turn
-        cnt++;
-        put_stone(enemy_turn(),2);
-        print_map();
+        else
+        {
+            put_stone(enemy_turn(),2);
+            print_map();
+        }
 
         //winner check
         end=end_check();
@@ -162,7 +167,7 @@ int end_check()
                     if(!(0<=i+xx[k]*l && i+xx[k]*l<N && 0<=j+yy[k]*l && j+yy[k]*l<M && a[i][j]==a[i+xx[k]*l][j+yy[k]*l]))
                         break;
                 }
-                if(l==CONNECT)
+                if(l==CONNECT && a[i][j]!=0)
                     return a[i][j];
             }
         }
